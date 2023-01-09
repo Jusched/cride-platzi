@@ -10,6 +10,8 @@ env = environ.Env()
 # Base
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # Language and timezone
 TIME_ZONE = 'America/Mexico_City'
 LANGUAGE_CODE = 'en-us'
@@ -30,6 +32,9 @@ ROOT_URLCONF = 'config.urls'
 # WSGI
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Users and authentication 
+AUTH_USER_MODEL = 'users.user'
+
 # Apps
 DJANGO_APPS = [
     'django.contrib.auth',
@@ -41,8 +46,12 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 LOCAL_APPS = [
+    'cride.users.apps.UsersAppConfig',
+    'cride.circles.apps.CirclesAppConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -149,3 +158,18 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERYD_TASK_TIME_LIMIT = 5 * 60
 CELERYD_TASK_SOFT_TIME_LIMIT = 60
+
+# Django REST Framework
+# Default renderers but with their position switched.
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.BrowsableAPIRenderer",
+        "rest_framework.renderers.JSONRenderer"
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PAGINATION_CLASS" : "rest_framework.pagination.LimitOffsetPagination", 
+    "PAGE_SIZE" : 3,
+}
+
