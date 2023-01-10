@@ -17,7 +17,7 @@ class IsActiveCircleMember(BasePermission):
         """Verify user is an active member of the circle."""
 
         try:
-            Membership.objects.get(user=request.user, circle=view.circle, is_active=True)
+            Membership.objects.filter(user=request.user, circle=view.circle, is_active=True)
 
         except Membership.DoesNotExist:
             return False
