@@ -3,6 +3,8 @@
 # Django REST Framework
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Local modules
 from cride.circles.models import Circle, Membership
@@ -20,6 +22,15 @@ class CircleViewSet(mixins.CreateModelMixin,
     serializer_class= CircleModelSerializer
 # With this, we only look up circles using their slug_name
     lookup_field= "slug_name"
+
+    # Filters
+    filter_backends= (SearchFilter, OrderingFilter, DjangoFilterBackend)
+    search_fields= ("slug_name", "name")
+    ordering_fields= ("rides_offered", "rides_taken", "name", "created", "member_limit")
+# This one is the default ordering.    
+    ordering= ("-members__count", "-rides_offered", "-rides_taken")
+    filter_fields= ("verified", "is_limited")
+
 
     def get_queryset(self):
         """Restrict list to public-only"""
