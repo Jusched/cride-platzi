@@ -1,23 +1,20 @@
-"""Rides urls."""
+"""Rides URLs."""
 
 # Django REST Framework
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from django.urls import include, path
 
-# Local modules
+# Views
 from .views import rides as ride_views
 
-
-router= DefaultRouter()
+router = DefaultRouter()
 router.register(
-    r'circles/(?P<slug_name>[a-zA-Z0-9_-]+)/members',
+    r'circles/(?P<slug_name>[a-zA-Z0-9_-]+)/rides',
     ride_views.RideViewSet,
-    basename="ride"
+    basename='ride'
 )
 
-urlpatterns= [
-    path("", include(router.urls))
+urlpatterns = [
+    path('', include(router.urls))
 ]
-
-
 
