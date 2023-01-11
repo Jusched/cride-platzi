@@ -5,7 +5,7 @@ from django.db import models
 class CRideModel(models.Model):
     """Comparte Ride base models.
     
-    CRideModel as an abstract base class from which every 
+    CRideModel is an abstract base class from which every 
     other model in the project will inherit. This class 
     provides every table with the following attributes:
 
@@ -14,6 +14,7 @@ class CRideModel(models.Model):
         - modified: DateTime = Store the last datetime in
         which the object was modified.
     """
+    
     created= models.DateTimeField(
         'created at',
         auto_now_add=True,
